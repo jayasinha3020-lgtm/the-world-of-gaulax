@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The World of Gaulax ✦</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="stars" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="brand" href="#" aria-label="The World of Gaulax home"><span class="brand-mark">✦</span> THE WORLD OF <b>GAULAX</b></a>
+  <div class="top-actions"><span class="status-dot"></span><span id="status">Your little universe</span><button class="icon-btn" id="soundToggle" aria-label="Toggle ambience">♫</button></div>
+</header>
+<main>
+  <section class="hero">
+    <div class="eyebrow"><span>✧</span> A PRIVATE LITTLE UNIVERSE <span>✧</span></div>
+    <h1>Welcome, <em>Gauraxmi</em><span class="sparkle"> ✨</span></h1>
+    <p class="hero-copy">Two players. Four worlds. A million tiny memories.<br>Choose a portal and let the chaos begin.</p>
+    <div class="hero-pills"><span>☾ midnight magic</span><span>♡ made for two</span><span>✦ memories in progress</span></div>
+    <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="moon">☾</div>
+  </section>
+
+  <section class="section-head"><div><p class="eyebrow left">CHOOSE YOUR ADVENTURE</p><h2>Four worlds, <em>one story.</em></h2></div><span class="section-note">Pick a portal to enter ↘</span></section>
+  <section class="portals">
+    <button class="portal detective" data-game="detective">
+      <div class="portal-top"><span class="game-symbol">⌕</span><span class="game-tag">CO-OP MYSTERY</span></div>
+      <div class="portal-art"><span class="art-moon">☾</span><span class="file-icon">CASE<br>NO. 001</span><span class="red-string"></span></div>
+      <div class="portal-content"><h3>OPERATION<br>CHIKOFIYA</h3><p>Secret clues. Shared evidence. One suspicious little truth.</p><span class="portal-link">Open case file <b>↗</b></span></div>
+    </button>
+    <button class="portal song" data-game="song">
+      <div class="portal-top"><span class="game-symbol">♫</span><span class="game-tag">BOLLYWOOD GUESSING</span></div>
+      <div class="portal-art"><span class="heart heart-a">♥</span><span class="heart heart-b">♡</span><span class="music-note">♪</span><span class="tiny-star">✦</span></div>
+      <div class="portal-content"><h3>BHUTKIKA <span class="pink">♡</span></h3><p>Emoji riddles, filmi brains, and “AREY I KNOW THIS ONE!”</p><span class="portal-link">Guess a song <b>↗</b></span></div>
+    </button>
+    <button class="portal wonder" data-game="wonder">
+      <div class="portal-top"><span class="game-symbol">✧</span><span class="game-tag">TWO-MIND MAGIC</span></div>
+      <div class="portal-art"><span class="cloud cloud-a">☁</span><span class="cloud cloud-b">☁</span><span class="floating-heart">♡</span><span class="rainbow">⌒</span></div>
+      <div class="portal-content"><h3>BACCHKU'S<br>WONDERLAND</h3><p>Same brain? Finish each other's stories and find out.</p><span class="portal-link">Enter wonderland <b>↗</b></span></div>
+    </button>
+    <button class="portal choc" data-game="choc">
+      <div class="portal-top"><span class="game-symbol">♟</span><span class="game-tag">BOARD-GAME ARCADE</span></div>
+      <div class="portal-art"><span class="choc-disc">C</span><span class="vanilla-disc">V</span><span class="candy">✦</span></div>
+      <div class="portal-content"><h3>CHOCNILLA</h3><p>Chocolate vs vanilla. Tiny rivalries, legendary rematches.</p><span class="portal-link">Enter arcade <b>↗</b></span></div>
+    </button>
+  </section>
+
+  <section class="lower-grid">
+    <div class="leaderboard panel">
+      <div class="panel-title"><div><p class="eyebrow left">THE FRIENDSHIP RECORD</p><h2>CHIKURFI <em>BOARD</em></h2></div><span class="trophy">♛</span></div>
+      <div class="score-row"><div class="avatar avatar-one">G</div><div class="player"><b>Player One</b><small>Keeper of the chaos</small></div><strong id="score1">0 <small>pts</small></strong></div>
+      <div class="score-row"><div class="avatar avatar-two">B</div><div class="player"><b>Player Two</b><small>Certified plot twist</small></div><strong id="score2">0 <small>pts</small></strong></div>
+      <div class="leader-foot"><span>✦ Scores saved on this device for now</span><button class="text-btn" id="resetScores">Reset ↻</button></div>
+    </div>
+    <div class="note-panel panel"><span class="note-star">✧</span><p class="eyebrow left">A LITTLE REMINDER</p><h2>Some worlds are<br>better <em>shared.</em></h2><p class="note-copy">This is your corner of the internet. Collect clues, make silly memories, and keep the lore alive.</p><div class="signature">made of stardust & inside jokes <span>♡</span></div></div>
+  </section>
+  <footer>MADE FOR TWO · HELD TOGETHER BY STARDUST <span>✦</span></footer>
+</main>
+
+<div class="modal-backdrop" id="modal" aria-hidden="true">
+ <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <button class="close-modal" id="closeModal" aria-label="Close">×</button>
+  <p class="eyebrow left" id="modalEyebrow">A LITTLE ADVENTURE</p>
+  <h2 id="modalTitle">Portal</h2>
+  <p id="modalDesc" class="modal-desc"></p>
+  <div id="gameArea"></div>
+  <div class="modal-footer"><span>✦ GAULAX UNIVERSE</span><span id="modalHint">Ready when you are.</span></div>
+ </section>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
