@@ -22,6 +22,7 @@ function openGame(key){modal.classList.add('open');modal.setAttribute('aria-hidd
  if(key==='song') renderQuiz();
  if(key==='wonder') renderWonder();
  if(key==='choc') renderChoc();
+ playGaulaxMusic(key);
 }
 document.querySelectorAll('[data-game]').forEach(b=>b.addEventListener('click',()=>openGame(b.dataset.game)));
 function renderCase(){let c=cases[currentCase];guessCount=0;shownClues=false;area.innerHTML=`<div class="game-box"><p class="eyebrow left">CASE ${String(currentCase+1).padStart(3,'0')} / ${cases.length}</p><h3>${c.name}</h3><p class="small-muted">${c.intro}</p><div class="game-actions"><button class="game-btn primary" id="revealClues">Open clue envelope ✉</button><button class="game-btn" id="showSuspects">Inspect suspects</button></div><div id="clueArea"></div><div id="suspectArea"></div><div class="feedback" id="caseFeedback"></div></div>`;
@@ -37,6 +38,50 @@ $('#gameArea').addEventListener('click',e=>{if(e.target.id==='nextQuiz'){quizInd
 function renderWonder(){area.innerHTML=`<div class="game-box"><h3>Complete Our Story ✍️</h3><p class="small-muted">Add a sentence to the story. Keep it silly, magical, or both.</p><div class="story-output" id="storyOutput">Once upon a midnight, two detectives found a tiny door inside a rose...</div><textarea class="field" id="storyInput" rows="2" placeholder="And behind the door..."></textarea><div class="game-actions"><button class="game-btn primary" id="addStory">Add to our story +10</button><button class="game-btn" id="startMemory">Play memory match</button></div><p class="feedback" id="storyFeedback"></p><div id="memoryArea"></div></div>`;$('#addStory').onclick=()=>{let v=$('#storyInput').value.trim();if(!v)return;$('#storyOutput').textContent+=' '+v;$('#storyInput').value='';addScore('one',10);$('#storyFeedback').textContent='Added to the lore. +10 points ✨';};$('#startMemory').onclick=renderMemory;}
 function renderMemory(){let items=['🌙','🌸','🍓','🦋','🌙','🌸','🍓','🦋'].sort(()=>Math.random()-.5);let opened=[],done=new Set();$('#memoryArea').innerHTML='<h3 style="margin-top:20px">Memory match</h3><div class="memory-grid">'+items.map((x,i)=>`<button class="memory-card" data-card="${i}">✦</button>`).join('')+'</div><p class="feedback" id="memoryFeedback">Find all four pairs.</p>';document.querySelectorAll('[data-card]').forEach(b=>b.onclick=()=>{let i=+b.dataset.card;if(lockMemory||done.has(i)||opened.includes(i))return;b.textContent=items[i];opened.push(i);if(opened.length===2){if(items[opened[0]]===items[opened[1]]){opened.forEach(k=>{done.add(k);document.querySelector(`[data-card="${k}"]`).classList.add('matched')});opened=[];addScore('one',10);$('#memoryFeedback').textContent='Match! +10 ✨';if(done.size===8)$('#memoryFeedback').textContent='You found every pair! ✨';}else{lockMemory=true;setTimeout(()=>{opened.forEach(k=>document.querySelector(`[data-card="${k}"]`).textContent='✦');opened=[];lockMemory=false;},650);}}});}
 function renderChoc(){area.innerHTML=`<div class="game-box"><h3>Snakes & Ladders 🍫</h3><p class="small-muted">A tiny local demo race. Roll the dice and race to square 30. This version is single-device; online turns are not connected yet.</p><div style="display:flex;justify-content:space-around;text-align:center;margin:20px 0"><div><div class="avatar avatar-one" style="margin:auto">G</div><p>Player One</p><b id="pos1">1</b></div><div style="font-size:26px;align-self:center;color:#f0d5a4">🎲</div><div><div class="avatar avatar-two" style="margin:auto">B</div><p>Player Two</p><b id="pos2">1</b></div></div><div class="game-actions"><button class="game-btn primary" id="rollDice">Roll dice 🎲</button><button class="game-btn" id="resetRace">Restart</button></div><p class="feedback" id="raceFeedback">Player One's turn.</p></div>`;let p=[1,1],turn=0;const ladders={3:10,8:14,17:25},snakes={12:5,21:13,27:18};$('#rollDice').onclick=()=>{let d=Math.floor(Math.random()*6)+1;p[turn]=Math.min(30,p[turn]+d);let note=`Rolled ${d}.`;if(ladders[p[turn]]){p[turn]=ladders[p[turn]];note+=' Ladder! 🪜';}if(snakes[p[turn]]){p[turn]=snakes[p[turn]];note+=' Oops, a snake! 🐍';}$('#pos1').textContent=p[0];$('#pos2').textContent=p[1];if(p[turn]>=30){$('#raceFeedback').textContent=`Player ${turn+1} wins! +50 points ✨`;addScore(turn===0?'one':'two',50);$('#rollDice').disabled=true;return;}turn=1-turn;$('#raceFeedback').textContent=`${note} Player ${turn+1}'s turn.`;};$('#resetRace').onclick=()=>{p=[1,1];turn=0;$('#pos1').textContent='1';$('#pos2').textContent='1';$('#rollDice').disabled=false;$('#raceFeedback').textContent="Player One's turn.";};}
-$('#closeModal').onclick=closeModal;modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});function closeModal(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.style.overflow='';}
-$('#resetScores').onclick=()=>{if(confirm('Reset both local scores?')){scores={one:0,two:0};renderScores();}};
-let soundOn=false;$('#soundToggle').onclick=()=>{soundOn=!soundOn;$('#soundToggle').textContent=soundOn?'♫̸':'♫';$('#status').textContent=soundOn?'Sound controls ready':'Your little universe';};
+$('#closeModal').onclick=closeModal;modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});function closeModal(){
+  stopGaulaxMusic();
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+ const gaulaxSongs = {
+  detective: "QjMpFb0Tago",
+  song: "C2r8KXdWsOM",
+  wonder: "NnFbIRhKGcs",
+  choc: "BZ9pT9-Qfzk"
+};
+function playGaulaxMusic(game) {
+  const videoId = gaulaxSongs[game];
+  if (!videoId) return;
+
+  const oldBox = document.getElementById("gaulaxMusicBox");
+  if (oldBox) oldBox.remove();
+
+  const musicBox = document.createElement("div");
+  musicBox.id = "gaulaxMusicBox";
+  musicBox.style.marginTop = "16px";
+  musicBox.style.padding = "12px";
+  musicBox.style.borderRadius = "14px";
+  musicBox.style.background = "rgba(255,255,255,0.08)";
+  musicBox.innerHTML = "<p>🎵 Our little soundtrack</p>";
+
+  const player = document.createElement("iframe");
+  player.src =
+    "https://www.youtube.com/embed/" +
+    videoId +
+    "?autoplay=1&playsinline=1&rel=0";
+  player.title = "Gaulax music player";
+  player.allow = "autoplay; encrypted-media; picture-in-picture";
+  player.setAttribute("frameborder", "0");
+  player.style.width = "100%";
+  player.style.height = "100px";
+  player.style.borderRadius = "12px";
+
+  musicBox.appendChild(player);
+  area.prepend(musicBox);
+}
+
+function stopGaulaxMusic() {
+  const musicBox = document.getElementById("gaulaxMusicBox");
+  if (musicBox) musicBox.remove();
+}
