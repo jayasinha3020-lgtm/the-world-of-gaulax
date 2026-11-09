@@ -50,7 +50,7 @@ $('#closeModal').onclick=closeModal;modal.addEventListener('click',e=>{if(e.targ
   wonder: "NnFbIRhKGcs",
   choc: "BZ9pT9-Qfzk"
 };
-const welcomeSong = "vpNHNEomzSI";
+
 
 const welcomeAudio = new Audio("./welcome-song.mp3");
 welcomeAudio.loop = true;
