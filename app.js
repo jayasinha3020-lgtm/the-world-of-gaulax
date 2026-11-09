@@ -52,32 +52,27 @@ $('#closeModal').onclick=closeModal;modal.addEventListener('click',e=>{if(e.targ
 };
 const welcomeSong = "vpNHNEomzSI";
 
-document.addEventListener("DOMContentLoaded", function () {
-  const welcomeBtn = document.getElementById("welcomeMusicBtn");
+const welcomeAudio = new Audio("./welcome-song.mp3");
+welcomeAudio.loop = true;
+welcomeAudio.volume = 0.5;
 
-  if (!welcomeBtn) return;
+const welcomeBtn = document.getElementById("welcomeMusicBtn");
 
-  welcomeBtn.addEventListener("click", function () {
-    let player = document.getElementById("welcomeMusicPlayer");
-
-    if (player) {
-      player.remove();
-      return;
+if (welcomeBtn) {
+  welcomeBtn.addEventListener("click", async function () {
+    if (welcomeAudio.paused) {
+      try {
+        await welcomeAudio.play();
+        welcomeBtn.textContent = "♫ Pause our song ♡";
+      } catch (error) {
+        welcomeBtn.textContent = "♡ Tap to play again ♡";
+      }
+    } else {
+      welcomeAudio.pause();
+      welcomeBtn.textContent = "♡ Play our song ♡";
     }
-
-    player = document.createElement("iframe");
-    player.id = "welcomeMusicPlayer";
-    player.src = "https://www.youtube.com/embed/vpNHNEomzSI?playsinline=1&rel=0";
-    player.title = "Our welcome song";
-    player.allow = "autoplay; encrypted-media; picture-in-picture";
-    player.style.width = "100%";
-    player.style.height = "150px";
-    player.style.marginTop = "15px";
-    player.style.borderRadius = "12px";
-
-    document.querySelector(".hero").appendChild(player);
   });
-});
+}
 function playGaulaxMusic(game) {
   const videoId = gaulaxSongs[game];
   if (!videoId) return;
