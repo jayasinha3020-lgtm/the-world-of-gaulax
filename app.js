@@ -52,22 +52,31 @@ $('#closeModal').onclick=closeModal;modal.addEventListener('click',e=>{if(e.targ
 };
 const welcomeSong = "vpNHNEomzSI";
 
-document.getElementById("welcomeMusicBtn")?.addEventListener("click", function () {
-  const oldPlayer = document.getElementById("welcomeMusicPlayer");
-  if (oldPlayer) oldPlayer.remove();
+document.addEventListener("DOMContentLoaded", function () {
+  const welcomeBtn = document.getElementById("welcomeMusicBtn");
 
-  const player = document.createElement("iframe");
-  player.id = "welcomeMusicPlayer";
-  player.src = "https://www.youtube.com/embed/" + welcomeSong + "?playsinline=1&rel=0";
- player.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
-  player.title = "Our welcome song";
-  player.allow = "autoplay; encrypted-media";
-  player.style.width = "100%";
-  player.style.height = "100px";
-  player.style.marginTop = "15px";
-  player.style.borderRadius = "12px";
+  if (!welcomeBtn) return;
 
-  document.querySelector(".hero").appendChild(player);
+  welcomeBtn.addEventListener("click", function () {
+    let player = document.getElementById("welcomeMusicPlayer");
+
+    if (player) {
+      player.remove();
+      return;
+    }
+
+    player = document.createElement("iframe");
+    player.id = "welcomeMusicPlayer";
+    player.src = "https://www.youtube.com/embed/vpNHNEomzSI?playsinline=1&rel=0";
+    player.title = "Our welcome song";
+    player.allow = "autoplay; encrypted-media; picture-in-picture";
+    player.style.width = "100%";
+    player.style.height = "150px";
+    player.style.marginTop = "15px";
+    player.style.borderRadius = "12px";
+
+    document.querySelector(".hero").appendChild(player);
+  });
 });
 function playGaulaxMusic(game) {
   const videoId = gaulaxSongs[game];
