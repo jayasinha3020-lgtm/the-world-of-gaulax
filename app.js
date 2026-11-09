@@ -58,7 +58,8 @@ document.getElementById("welcomeMusicBtn")?.addEventListener("click", function (
 
   const player = document.createElement("iframe");
   player.id = "welcomeMusicPlayer";
-  player.src = "https://www.youtube.com/embed/" + welcomeSong + "?autoplay=1&playsinline=1";
+  player.src = "https://www.youtube.com/embed/" + welcomeSong + "?playsinline=1&rel=0";
+ player.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
   player.title = "Our welcome song";
   player.allow = "autoplay; encrypted-media";
   player.style.width = "100%";
