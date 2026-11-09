@@ -52,7 +52,7 @@ $('#closeModal').onclick=closeModal;modal.addEventListener('click',e=>{if(e.targ
 };
 
 
-const welcomeAudio = new Audio("./welcome-song.mp3");
+const welcomeAudio = new Audio("./welcome-song.mp3.mp3");
 welcomeAudio.loop = true;
 welcomeAudio.volume = 0.5;
 
