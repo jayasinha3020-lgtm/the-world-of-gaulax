@@ -50,6 +50,24 @@ $('#closeModal').onclick=closeModal;modal.addEventListener('click',e=>{if(e.targ
   wonder: "NnFbIRhKGcs",
   choc: "BZ9pT9-Qfzk"
 };
+const welcomeSong = "vpNHNEomzSI";
+
+document.getElementById("welcomeMusicBtn")?.addEventListener("click", function () {
+  const oldPlayer = document.getElementById("welcomeMusicPlayer");
+  if (oldPlayer) oldPlayer.remove();
+
+  const player = document.createElement("iframe");
+  player.id = "welcomeMusicPlayer";
+  player.src = "https://www.youtube.com/embed/" + welcomeSong + "?autoplay=1&playsinline=1";
+  player.title = "Our welcome song";
+  player.allow = "autoplay; encrypted-media";
+  player.style.width = "100%";
+  player.style.height = "100px";
+  player.style.marginTop = "15px";
+  player.style.borderRadius = "12px";
+
+  document.querySelector(".hero").appendChild(player);
+});
 function playGaulaxMusic(game) {
   const videoId = gaulaxSongs[game];
   if (!videoId) return;
